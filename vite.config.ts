@@ -5,8 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    // ✅ 关键新增这一行
-    base: '/Dialogue-First-English-Use/',
+    base: './',
 
     server: {
       port: 3000,
