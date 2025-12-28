@@ -2,6 +2,8 @@
 import { GoogleGenAI, LiveServerMessage, Modality, Blob, Type } from '@google/genai';
 import { VerbalAtom, GenerationSlot } from '../types';
 
+declare const process: any;
+
 export const decodeBase64 = (base64: string) => {
   const binaryString = atob(base64);
   const len = binaryString.length;
@@ -91,7 +93,10 @@ export async function playTTS(text: string, audioContext: AudioContext) {
  * This is the core "Intelligent Matrix Expansion" logic.
  */
 export async function generateAtomForSlot(profession: string, slot: GenerationSlot): Promise<VerbalAtom | null> {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = getApiKey();
+  if (!apiKey) return null;
+
+  const ai = new GoogleGenAI({ apiKey });
   const prompt = `
     Act as a linguistic psychologist for the app "Dialogue: First English Use".
     The user is a ${profession}. They are facing a specific pressure point: "${slot.description}" (Category: ${slot.category}).

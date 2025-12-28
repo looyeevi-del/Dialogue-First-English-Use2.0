@@ -96,6 +96,54 @@ const Profile: React.FC<ProfileProps> = ({
             </div>
           </div>
         </div>
+
+        {/* API Key Configuration */}
+        <div className={`${isDark ? 'bg-zinc-900/20 border-white/5' : 'bg-white border-slate-200 shadow-sm'} border p-6 rounded-[2.5rem] space-y-6 mt-4`}>
+          <div className="flex justify-between items-center">
+            <span className="text-xs font-bold uppercase tracking-wider">Gemini API Key</span>
+            <button 
+              onClick={() => setShowKeyInput(!showKeyInput)}
+              className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase transition-all ${showKeyInput ? 'bg-blue-600 text-white' : (isDark ? 'bg-zinc-800 text-zinc-400' : 'bg-slate-100 text-slate-500')}`}
+            >
+              {showKeyInput ? (isCn ? '收起' : 'Close') : (isCn ? '配置' : 'Config')}
+            </button>
+          </div>
+
+          {showKeyInput && (
+            <div className="animate-in slide-in-from-top-2 duration-300">
+              <input 
+                type="password" 
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder={isCn ? "粘贴你的 Gemini API Key" : "Paste your Gemini API Key here"}
+                className={`w-full p-3 rounded-xl text-xs mb-3 font-mono outline-none border transition-all ${isDark ? 'bg-zinc-900 border-zinc-700 focus:border-blue-500 text-white' : 'bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-900'}`}
+              />
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleSaveKey} 
+                  className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors"
+                >
+                  {isCn ? '保存并刷新' : 'Save & Reload'}
+                </button>
+                <button 
+                  onClick={() => {
+                    localStorage.removeItem('gemini_api_key');
+                    setApiKey('');
+                    window.location.reload();
+                  }} 
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors ${isDark ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' : 'bg-red-50 text-red-600 hover:bg-red-100'}`}
+                >
+                  {isCn ? '清除' : 'Clear'}
+                </button>
+              </div>
+              <p className={`text-[10px] mt-3 leading-relaxed ${isDark ? 'text-zinc-500' : 'text-slate-400'}`}>
+                {isCn 
+                  ? '如果没有 Key，将使用基础模式（无实时对话/定制生成）。' 
+                  : 'Without a key, app runs in basic mode (No live chat/custom generation).'}
+              </p>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* McKee Quote Section */}
