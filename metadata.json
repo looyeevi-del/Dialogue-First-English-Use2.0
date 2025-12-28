@@ -1,0 +1,7 @@
+{
+  "name": "Dialogue: First English Use",
+  "description": "A radical English speaking system that prioritizes vocal exposure over correctness, featuring verbal action atoms and non-judgmental sound cards.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
